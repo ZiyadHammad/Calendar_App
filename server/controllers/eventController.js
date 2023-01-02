@@ -31,7 +31,13 @@ const updateEvent = asyncHandler(async (req, res) => {
 });
 
 const deleteEvent = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `Deleted event ${req.params.id}` });
+  const event = await Event.findById(req.params.id);
+  if (!event) {
+    res.status(400);
+    throw new Error(`Cannot find event ${req.params.id}`);
+  }
+  await event.remove();
+  res.status(200).json({ id: req.params.id });
 });
 
 module.exports = {
