@@ -11,6 +11,8 @@ const { errorHandler } = require('./middleware/errorMiddleware')
 const app = express()
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 
 app.use('/api/events', require('./routes/eventRoutes'))
 
